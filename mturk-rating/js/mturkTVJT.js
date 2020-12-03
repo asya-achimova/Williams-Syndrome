@@ -18,22 +18,36 @@ function make_slides(f) {
   some =
    _.shuffle(
      [
+       {type: "test", item: "some_balloon", quantifier: "some"},
        {type: "test", item: "some_camera", quantifier: "some"},
        {type: "test", item: "some_circle", quantifier: "some"},
        {type: "test", item: "some_flower", quantifier: "some"},
        {type: "test", item: "some_house", quantifier: "some"},
+       {type: "test", item: "some_lock", quantifier: "some"},
+       {type: "test", item: "some_moon", quantifier: "some"},
+       {type: "test", item: "some_puzzle", quantifier: "some"},
+       {type: "test", item: "some_square", quantifier: "some"},
+       {type: "test", item: "some_star", quantifier: "some"},
+       {type: "test", item: "some_sun", quantifier: "some"},
+       {type: "test", item: "some_tree", quantifier: "some"},
      ]
     );
 
     all =
      _.shuffle(
       [
+        {type: "test", item: "all_boat", quantifier: "all"},
+        {type: "test", item: "all_camera", quantifier: "all"},
         {type: "test", item: "all_circle", quantifier: "all"},
+        {type: "test", item: "all_cloud", quantifier: "all"},
         {type: "test", item: "all_flag", quantifier: "all"},
         {type: "test", item: "all_flower", quantifier: "all"},
         {type: "test", item: "all_heart", quantifier: "all"},
         {type: "test", item: "all_key", quantifier: "all"},
-
+        {type: "test", item: "all_lightbulb", quantifier: "all"},
+        {type: "test", item: "all_puzzle", quantifier: "all"},
+        {type: "test", item: "all_square", quantifier: "all"},
+        {type: "test", item: "all_tree", quantifier: "all"},
       ]
      );
 
@@ -45,6 +59,13 @@ function make_slides(f) {
         {type: "test", item: "notall_cup", quantifier: "notall"},
         {type: "test", item: "notall_doughnut", quantifier: "notall"},
         {type: "test", item: "notall_flower", quantifier: "notall"},
+        {type: "test", item: "notall_heart", quantifier: "notall"},
+        {type: "test", item: "notall_icecream", quantifier: "notall"},
+        {type: "test", item: "notall_kite", quantifier: "notall"},
+        {type: "test", item: "notall_phone", quantifier: "notall"},
+        {type: "test", item: "notall_smile", quantifier: "notall"},
+        {type: "test", item: "notall_star", quantifier: "notall"},
+        {type: "test", item: "notall_triangle", quantifier: "notall"},
       ]
      )
     ;
@@ -57,6 +78,13 @@ function make_slides(f) {
         {type: "test", item: "or_cupCake", quantifier: "or"},
         {type: "test", item: "or_flowerpotHouse", quantifier: "or"},
         {type: "test", item: "or_icecreamSun", quantifier: "or"},
+        {type: "test", item: "or_keyDoughnut", quantifier: "or"},
+        {type: "test", item: "or_lightbulb", quantifier: "or"},
+        {type: "test", item: "or_phoneCross", quantifier: "or"},
+        {type: "test", item: "or_ring", quantifier: "or"},
+        {type: "test", item: "or_smile", quantifier: "or"},
+        {type: "test", item: "or_smileHeart", quantifier: "or"},
+        {type: "test", item: "or_triangleSquare", quantifier: "or"},
       ]
      );
 
@@ -68,7 +96,13 @@ function make_slides(f) {
         {type: "test", item: "two_balloon", quantifier: "two"},
         {type: "test", item: "two_cloud", quantifier: "two"},
         {type: "test", item: "two_cross", quantifier: "two"},
-
+        {type: "test", item: "two_flag", quantifier: "two"},
+        {type: "test", item: "two_flowerpot", quantifier: "two"},
+        {type: "test", item: "two_lock", quantifier: "two"},
+        {type: "test", item: "two_ring", quantifier: "two"},
+        {type: "test", item: "two_smile", quantifier: "two"},
+        {type: "test", item: "two_tree", quantifier: "two"},
+        {type: "test", item: "two_triangle", quantifier: "two"},
       ]
      );
 
