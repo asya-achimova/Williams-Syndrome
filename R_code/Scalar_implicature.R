@@ -51,23 +51,43 @@ index <- which(quantifier %in% utteranceNames)
 pragmaticListener <- function(utterance, index){
   output <- rep(0, length(states))
   for (state in states){
-    print(state)
     uttProb <- speaker(state,alpha,utterances)
-    print(uttProb)
     output[state+1] <- uttProb[index]
   }
   return(output/sum(output))
 }
 
-speakerIgnorant <- function(state, alpha, utterances){
+randomDraw <- function(probability){
+  draw <- rbinom(1,1,probability)
+  ifelse(draw == 1, TRUE, FALSE)
+}
+
+getBelief <- function(access,actualState){
+  allStates <- ifelse(access,state,randomDraw(0.5))
+  sum(allStates)
+}
+access <- c(TRUE, TRUE, FALSE)
+actualState <- c(TRUE, TRUE, TRUE)
+
+uncertainSpeaker <- function(actualState, access, alpha, utterances){
   utterancesPrior <- getUniformPrior(utterances)
+  belief <- getBelief(access, actualState)
   output <- rep(0, length(utterances))
   for (word in c(1:length(utterances))) {
     ll <- literalListener(utterances[[word]],states)
-    utility <- exp(alpha * log(ll[state+1])) * utterancesPrior[word]
+    utility <- exp(alpha * log(ll[belief+1])) * utterancesPrior[word]
     output[word] <- utility
   }
   if (sum(output) != 0){
     return(output/sum(output))
   } else {return(output)}
+}
+
+uncertainListener <- function(access, utterance, index){
+  output <- rep(0, length(states))
+  for (state in states){
+    uttProb <- uncertainSpeaker(actualState, access, alpha, utterances)
+    output[state+1] <- uttProb[index]
+  }
+  return(output/sum(output))
 }
