@@ -1,93 +1,201 @@
 library(purrr)
 library(rlang)
-states <- c(0,1,2,3)
 
-utterances <- list(
-  some <- function(){states > 0},
-  all <- function() {states == 3},
-  two <- function(){states == 2},
-  notall <- function(){states != 3}
+# number of objects that behave in a particular manner
+# I put the name "Constant" at the end, because this value should not be modified
+allStateNumbersConst <- c(0,1,2,3)
+
+# the names of a all (four) utterances
+utteranceNames <- c("some","all","two","notall","none")
+# corresponding utterance truth functions.
+# utterances as boolean functions of stateNumber
+# f(stateNumber) -> boolean
+utteranceFunctions <- list(
+  some <- function(stateNumber){stateNumber > 0},
+  all <- function(stateNumber) {stateNumber == 3},
+  two <- function(stateNumber){stateNumber == 2},
+  notall <- function(stateNumber){stateNumber != 3},
+  none <- function(stateNumber){stateNumber == 0}
+)
+# f(stateNumber) -> 0/1
+utteranceFunctions01 <- list(
+  some <- function(stateNumber){ifelse(stateNumber > 0, 1, 0)},
+  all <- function(stateNumber) {ifelse(stateNumber == 3, 1, 0)},
+  two <- function(stateNumber){ifelse(stateNumber == 2, 1, 0)},
+  notall <- function(stateNumber){ifelse(stateNumber != 3, 1, 0)},
+  none <- function(stateNumber){ifelse(stateNumber == 0, 1, 0)}
 )
 
-names(utterances) <- c("some","all","two","notall")
+# From this, create a truth value matrix. 
+# Rows: states (i.e. vectorOfallStatesConstant values) 
+# Columns: utterances 
+truthValuesForAllUtterancesForAllStateNumsConst <- array( 
+  c(
+    lapply(allStateNumbersConst, utteranceFunctions[[1]]),
+    lapply(allStateNumbersConst, utteranceFunctions[[2]]),
+    lapply(allStateNumbersConst, utteranceFunctions[[3]]),
+    lapply(allStateNumbersConst, utteranceFunctions[[4]]), 
+    lapply(allStateNumbersConst, utteranceFunctions[[5]])), 
+  dim = c(4,5))
+colnames(truthValuesForAllUtterancesForAllStateNumsConst) = c("some","all","two","notall","none")
+rownames(truthValuesForAllUtterancesForAllStateNumsConst) = c("zero","one","two","three")
+## and with 0 and 1 s also.
+truthValuesForAllUtterancesForAllStateNumsConst01 <- array( 
+  c(
+    lapply(allStateNumbersConst, utteranceFunctions01[[1]]),
+    lapply(allStateNumbersConst, utteranceFunctions01[[2]]),
+    lapply(allStateNumbersConst, utteranceFunctions01[[3]]),
+    lapply(allStateNumbersConst, utteranceFunctions01[[4]]),
+    lapply(allStateNumbersConst, utteranceFunctions01[[5]])), 
+  dim = c(4,5))
+colnames(truthValuesForAllUtterancesForAllStateNumsConst01) = c("some","all","two","notall","none")
+rownames(truthValuesForAllUtterancesForAllStateNumsConst01) = c("zero","one","two","three")
 
-utteranceNames <- c("some","all","two","notall")
-
+# returns a uniform prob. mass over a list (e.g. a set of states)
 getUniformPrior <- function(states){
-  probability <- 1/length(states)
-  prior <- rep(probability, length(states))
-  return(prior)
+  return(rep(1/length(states), length(states)))
+}
+
+allStatesConst = matrix(
+c(c(FALSE,FALSE,FALSE),
+  c(FALSE,FALSE,TRUE),
+  c(FALSE,TRUE,FALSE),
+  c(FALSE,TRUE,TRUE),
+  c(TRUE,FALSE,FALSE),
+  c(TRUE,FALSE,TRUE),
+  c(TRUE,TRUE,FALSE),
+  c(TRUE,TRUE,TRUE)),
+nrow = 8,
+ncol = 3,
+byrow = TRUE)
+allStateNamesConst <- c("fff","fft","ftf","ftt","tff","tft","ttf","ttt")
+rownames(allStatesConst) = allStateNamesConst
+
+
+
+#
+allNumIndividualStatesConst <- apply(allStatesConst, 1, sum)
+
+# determines the number of true values.
+getNumStatesTrue <- function(states) {
+  sum(states)
+}
+
+# From this, create a truth value matrix. 
+# Rows: states (i.e. vectorOfallStatesConstant values) 
+# Columns: utterances 
+truthValuesForAllUtterancesForAllStatesConst <- array( 
+  c(
+    lapply(allNumIndividualStatesConst, utteranceFunctions[[1]]),
+    lapply(allNumIndividualStatesConst, utteranceFunctions[[2]]),
+    lapply(allNumIndividualStatesConst, utteranceFunctions[[3]]),
+    lapply(allNumIndividualStatesConst, utteranceFunctions[[4]]),
+    lapply(allNumIndividualStatesConst, utteranceFunctions[[5]])), 
+  dim = c(8,5))
+colnames(truthValuesForAllUtterancesForAllStatesConst) = c("some","all","two","notall","none")
+rownames(truthValuesForAllUtterancesForAllStatesConst) = allStateNamesConst
+
+## and with 0 and 1 s also.
+truthValuesForAllUtterancesForAllStatesConst01 <- array( 
+  c(
+    lapply(allNumIndividualStatesConst, utteranceFunctions01[[1]]),
+    lapply(allNumIndividualStatesConst, utteranceFunctions01[[2]]),
+    lapply(allNumIndividualStatesConst, utteranceFunctions01[[3]]),
+    lapply(allNumIndividualStatesConst, utteranceFunctions01[[4]]),
+    lapply(allNumIndividualStatesConst, utteranceFunctions01[[5]])), 
+  dim = c(8,5))
+colnames(truthValuesForAllUtterancesForAllStatesConst01) = c("some","all","two","notall","none")
+rownames(truthValuesForAllUtterancesForAllStatesConst01) = allStateNamesConst
+
+
+# setting the "states Prior" as a global variable to the uniform prior (over all states).
+stateIndividualPriorConst <- getUniformPrior(allNumIndividualStatesConst)
+
+stateNumPriorConst <- getUniformPrior(allStateNumbersConst)
+
+# returns log likelihoods for all possible states given an utterance
+literalListenerIndividualStates <- function(uttIndex){
+  truthValues <- unlist(truthValuesForAllUtterancesForAllStatesConst01[,uttIndex])+1e-100
+  posterior <- truthValues * stateIndividualPriorConst
+  posterior <- posterior/sum(posterior) 
+  return(log(posterior))
+}
+
+literalListenerMatrixConst <- array(
+  c(
+    literalListenerIndividualStates(1),
+    literalListenerIndividualStates(2),
+    literalListenerIndividualStates(3),
+    literalListenerIndividualStates(4),
+    literalListenerIndividualStates(5)),
+    dim = c(8,5)
+  )
+colnames(literalListenerMatrixConst) = c("some","all","two","notall","none")
+rownames(literalListenerMatrixConst) = allStateNamesConst
+    
+# returns log likelihoods for all possible states given an utterance
+literalListenerNumStates <- function(uttIndex){
+  truthValues <- unlist(truthValuesForAllUtterancesForAllStateNumsConst01[,uttIndex])+1e-100
+  posterior <- truthValues * stateNumPriorConst
+  posterior <- posterior/sum(posterior) 
+  return(log(posterior))
+}
+
+alphaConst <- 1
+
+getAllStatesTF <- function(stateTF, accessTF) {
+  apply(allStatesConst)
 }
 
 
-literalListener <- function(utterance, states){
-  statesPrior <- getUniformPrior(states)
-  posterior <- rep(0, length(states))
-  truthValue <- utterance()
-  posterior[which(truthValue == TRUE)] <- 1
-  posterior <- posterior * statesPrior
-  posterior/sum(posterior) 
-}
-
-
-speaker <- function(state, alpha, utterances){
-  utterancesPrior <- getUniformPrior(utterances)
-  output <- rep(0, length(utterances))
-  for (word in c(1:length(utterances))) {
-    ll <- literalListener(utterances[[word]],states)
-    utility <- exp(alpha * log(ll[state+1])) * utterancesPrior[word]
-    output[word] <- utility
+speaker <- function(stateTF, accessTF) {
+  # first get the constallations that are possible given the access and the state of the three objects
+  accessIndices <- which(accessTF, TRUE)
+  relevantStateValues <- stateTF[accessIndices]
+  relevantStates <- as.matrix(allStatesConst[,accessIndices])
+  applicableRows <- which(apply(relevantStates, 1, identical, relevantStateValues),TRUE)
+  # the state that the speaker believes may apply
+  applicableStates <- allStatesConst[applicableRows,]
+  
+  # uniform over the applicable states.
+  P_o_as <- rep(1/length(applicableRows), length(applicableRows))
+  # now we calculate the weighted sum... 
+  Lik_w_oa <-  exp(alphaConst * literalListenerMatrixConst[applicableRows, ])
+  if(!is.matrix(Lik_w_oa)) {
+    Lik_w_oa <- t(as.matrix(Lik_w_oa))
   }
-  if (sum(output) != 0){
-    return(output/sum(output))
-  } else {return(output)}
+  P_w_oa <- t(apply(Lik_w_oa, 1, function(a){return(a/sum(a))}))
+  return(P_o_as %*% P_w_oa)
 }
 
-alpha <- 1
+# # TEST Speaker function...: 
+# stateTF <- c(TRUE, TRUE, FALSE)
+# accessTF <- c(TRUE, TRUE, FALSE)
 
-quantifier <- data[i,"quantifier"]
-index <- which(quantifier %in% utteranceNames)
-
-pragmaticListener <- function(utterance, index){
-  output <- rep(0, length(states))
-  for (state in states){
-    uttProb <- speaker(state,alpha,utterances)
-    output[state+1] <- uttProb[index]
+listener <- function(utteranceIndex, accessTF) {
+  statePriors <- rep(1/nrow(allStatesConst), nrow(allStatesConst))
+  statePosteriors <- as.matrix(rep(0, nrow(allStatesConst)))
+  rownames(statePosteriors) <- allStateNamesConst
+  for(i in c(1:nrow(allStatesConst))) {
+    statePosteriors[i] <- speaker(allStatesConst[i,],accessTF)[utteranceIndex]
   }
-  return(output/sum(output))
+  return(statePosteriors / sum(statePosteriors))
 }
 
-randomDraw <- function(probability){
-  draw <- rbinom(1,1,probability)
-  ifelse(draw == 1, TRUE, FALSE)
-}
 
-getBelief <- function(access,actualState){
-  allStates <- ifelse(access,state,randomDraw(0.5))
-  sum(allStates)
-}
-access <- c(TRUE, TRUE, FALSE)
-actualState <- c(TRUE, TRUE, TRUE)
+# # TEST Listener function...: 
+# stateTF <- c(TRUE, TRUE, FALSE)
+#accessTF <- c(FALSE, FALSE, FALSE)
+accessTF <- c(TRUE, TRUE, FALSE)
+round(listener(1, accessTF),2)
 
-uncertainSpeaker <- function(actualState, access, alpha, utterances){
-  utterancesPrior <- getUniformPrior(utterances)
-  belief <- getBelief(access, actualState)
-  output <- rep(0, length(utterances))
-  for (word in c(1:length(utterances))) {
-    ll <- literalListener(utterances[[word]],states)
-    utility <- exp(alpha * log(ll[belief+1])) * utterancesPrior[word]
-    output[word] <- utility
-  }
-  if (sum(output) != 0){
-    return(output/sum(output))
-  } else {return(output)}
-}
 
-uncertainListener <- function(access, utterance, index){
-  output <- rep(0, length(states))
-  for (state in states){
-    uttProb <- uncertainSpeaker(actualState, access, alpha, utterances)
-    output[state+1] <- uttProb[index]
-  }
-  return(output/sum(output))
-}
+
+
+
+
+
+
+
+
+
