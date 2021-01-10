@@ -6,13 +6,14 @@ library(rlang)
 allStateNumbersConst <- c(0,1,2,3)
 
 # the names of a all (four) utterances
-utteranceNames <- c("some","all","two","notall","none")
+utteranceNames <- c("some","all","one","two","notall","none")
 # corresponding utterance truth functions.
 # utterances as boolean functions of stateNumber
 # f(stateNumber) -> boolean
 utteranceFunctions <- list(
   some <- function(stateNumber){stateNumber > 0},
   all <- function(stateNumber) {stateNumber == 3},
+  one <- function(stateNumber){stateNumber == 1},
   two <- function(stateNumber){stateNumber == 2},
   notall <- function(stateNumber){stateNumber != 3},
   none <- function(stateNumber){stateNumber == 0}
@@ -21,6 +22,7 @@ utteranceFunctions <- list(
 utteranceFunctions01 <- list(
   some <- function(stateNumber){ifelse(stateNumber > 0, 1, 0)},
   all <- function(stateNumber) {ifelse(stateNumber == 3, 1, 0)},
+  one <- function(stateNumber){ifelse(stateNumber == 1, 1, 0)},
   two <- function(stateNumber){ifelse(stateNumber == 2, 1, 0)},
   notall <- function(stateNumber){ifelse(stateNumber != 3, 1, 0)},
   none <- function(stateNumber){ifelse(stateNumber == 0, 1, 0)}
@@ -35,9 +37,10 @@ truthValuesForAllUtterancesForAllStateNumsConst <- array(
     lapply(allStateNumbersConst, utteranceFunctions[[2]]),
     lapply(allStateNumbersConst, utteranceFunctions[[3]]),
     lapply(allStateNumbersConst, utteranceFunctions[[4]]), 
-    lapply(allStateNumbersConst, utteranceFunctions[[5]])), 
-  dim = c(4,5))
-colnames(truthValuesForAllUtterancesForAllStateNumsConst) = c("some","all","two","notall","none")
+    lapply(allStateNumbersConst, utteranceFunctions[[5]]), 
+    lapply(allStateNumbersConst, utteranceFunctions[[6]])), 
+  dim = c(4,6))
+colnames(truthValuesForAllUtterancesForAllStateNumsConst) = c("some","all","one","two","notall","none")
 rownames(truthValuesForAllUtterancesForAllStateNumsConst) = c("zero","one","two","three")
 ## and with 0 and 1 s also.
 truthValuesForAllUtterancesForAllStateNumsConst01 <- array( 
@@ -46,9 +49,10 @@ truthValuesForAllUtterancesForAllStateNumsConst01 <- array(
     lapply(allStateNumbersConst, utteranceFunctions01[[2]]),
     lapply(allStateNumbersConst, utteranceFunctions01[[3]]),
     lapply(allStateNumbersConst, utteranceFunctions01[[4]]),
-    lapply(allStateNumbersConst, utteranceFunctions01[[5]])), 
-  dim = c(4,5))
-colnames(truthValuesForAllUtterancesForAllStateNumsConst01) = c("some","all","two","notall","none")
+    lapply(allStateNumbersConst, utteranceFunctions01[[5]]),
+    lapply(allStateNumbersConst, utteranceFunctions01[[6]])), 
+  dim = c(4,6))
+colnames(truthValuesForAllUtterancesForAllStateNumsConst01) = c("some","all","one","two","notall","none")
 rownames(truthValuesForAllUtterancesForAllStateNumsConst01) = c("zero","one","two","three")
 
 # returns a uniform prob. mass over a list (e.g. a set of states)
@@ -90,9 +94,10 @@ truthValuesForAllUtterancesForAllStatesConst <- array(
     lapply(allNumIndividualStatesConst, utteranceFunctions[[2]]),
     lapply(allNumIndividualStatesConst, utteranceFunctions[[3]]),
     lapply(allNumIndividualStatesConst, utteranceFunctions[[4]]),
-    lapply(allNumIndividualStatesConst, utteranceFunctions[[5]])), 
-  dim = c(8,5))
-colnames(truthValuesForAllUtterancesForAllStatesConst) = c("some","all","two","notall","none")
+    lapply(allNumIndividualStatesConst, utteranceFunctions[[5]]),
+    lapply(allNumIndividualStatesConst, utteranceFunctions[[6]])), 
+  dim = c(8,6))
+colnames(truthValuesForAllUtterancesForAllStatesConst) = c("some","all","one","two","notall","none")
 rownames(truthValuesForAllUtterancesForAllStatesConst) = allStateNamesConst
 
 ## and with 0 and 1 s also.
@@ -102,9 +107,10 @@ truthValuesForAllUtterancesForAllStatesConst01 <- array(
     lapply(allNumIndividualStatesConst, utteranceFunctions01[[2]]),
     lapply(allNumIndividualStatesConst, utteranceFunctions01[[3]]),
     lapply(allNumIndividualStatesConst, utteranceFunctions01[[4]]),
-    lapply(allNumIndividualStatesConst, utteranceFunctions01[[5]])), 
-  dim = c(8,5))
-colnames(truthValuesForAllUtterancesForAllStatesConst01) = c("some","all","two","notall","none")
+    lapply(allNumIndividualStatesConst, utteranceFunctions01[[5]]),
+    lapply(allNumIndividualStatesConst, utteranceFunctions01[[6]])), 
+  dim = c(8,6))
+colnames(truthValuesForAllUtterancesForAllStatesConst01) = c("some","all","one","two","notall","none")
 rownames(truthValuesForAllUtterancesForAllStatesConst01) = allStateNamesConst
 
 
@@ -127,10 +133,11 @@ literalListenerMatrixConst <- array(
     literalListenerIndividualStates(2),
     literalListenerIndividualStates(3),
     literalListenerIndividualStates(4),
-    literalListenerIndividualStates(5)),
-    dim = c(8,5)
+    literalListenerIndividualStates(5),
+    literalListenerIndividualStates(6)),
+    dim = c(8,6)
   )
-colnames(literalListenerMatrixConst) = c("some","all","two","notall","none")
+colnames(literalListenerMatrixConst) = c("some","all","one","two","notall","none")
 rownames(literalListenerMatrixConst) = allStateNamesConst
     
 # returns log likelihoods for all possible states given an utterance
@@ -186,8 +193,8 @@ listener <- function(utteranceIndex, accessTF) {
 # # TEST Listener function...: 
 # stateTF <- c(TRUE, TRUE, FALSE)
 #accessTF <- c(FALSE, FALSE, FALSE)
-accessTF <- c(TRUE, TRUE, FALSE)
-round(listener(1, accessTF),2)
+accessTF <- c(TRUE, TRUE, TRUE)
+round(listener(6, accessTF),2)
 
 
 
