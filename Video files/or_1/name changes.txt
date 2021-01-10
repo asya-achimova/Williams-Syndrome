@@ -1,0 +1,10 @@
+keyDoughnut -> starPuzzle
+ring -> cakeRing
+lightbulb -> lightbulbBall
+boat -> boatCloud
+cupCake -> treeDoughnut
+icecreamSun -> lockBallon
+smile -> squareSmileyface
+triangleSquare -> heartSquare
+
+
