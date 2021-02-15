@@ -8,6 +8,14 @@ allStateNumbersConst <- c(0,1,2,3)
 
 # the names of a all (four) utterances
 utteranceNames <- c("some","all","one","two","notall","none")
+
+# utteranceSelector
+#utteranceSelector <- c(FALSE, TRUE, FALSE, FALSE, TRUE, TRUE)
+#utteranceSelector <- c(TRUE, TRUE, FALSE, FALSE, TRUE, TRUE)
+utteranceSelector <- c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE)
+utteranceValidIndices <- which(utteranceSelector)
+utteranceInValidIndices <- which(utteranceSelector==FALSE)
+
 # corresponding utterance truth functions.
 # utterances as boolean functions of stateNumber
 # f(stateNumber) -> boolean
@@ -62,17 +70,17 @@ getUniformPrior <- function(states){
 }
 
 allStatesConst = matrix(
-c(c(FALSE,FALSE,FALSE),
-  c(FALSE,FALSE,TRUE),
-  c(FALSE,TRUE,FALSE),
-  c(FALSE,TRUE,TRUE),
-  c(TRUE,FALSE,FALSE),
-  c(TRUE,FALSE,TRUE),
-  c(TRUE,TRUE,FALSE),
-  c(TRUE,TRUE,TRUE)),
-nrow = 8,
-ncol = 3,
-byrow = TRUE)
+  c(c(FALSE,FALSE,FALSE),
+    c(FALSE,FALSE,TRUE),
+    c(FALSE,TRUE,FALSE),
+    c(FALSE,TRUE,TRUE),
+    c(TRUE,FALSE,FALSE),
+    c(TRUE,FALSE,TRUE),
+    c(TRUE,TRUE,FALSE),
+    c(TRUE,TRUE,TRUE)),
+  nrow = 8,
+  ncol = 3,
+  byrow = TRUE)
 allStateNamesConst <- c("fff","fft","ftf","ftt","tff","tft","ttf","ttt")
 rownames(allStatesConst) = allStateNamesConst
 
@@ -136,11 +144,11 @@ literalListenerMatrixConst <- array(
     literalListenerIndividualStates(4),
     literalListenerIndividualStates(5),
     literalListenerIndividualStates(6)),
-    dim = c(8,6)
-  )
+  dim = c(8,6)
+)
 colnames(literalListenerMatrixConst) = c("some","all","one","two","notall","none")
 rownames(literalListenerMatrixConst) = allStateNamesConst
-    
+
 # returns log likelihoods for all possible states given an utterance
 literalListenerNumStates <- function(uttIndex){
   truthValues <- unlist(truthValuesForAllUtterancesForAllStateNumsConst01[,uttIndex])+1e-100
@@ -172,7 +180,8 @@ speaker <- function(stateTF, accessTF) {
   if(!is.matrix(Lik_w_oa)) {
     Lik_w_oa <- t(as.matrix(Lik_w_oa))
   }
-  P_w_oa <- t(apply(Lik_w_oa, 1, function(a){return(a/sum(a))}))
+  Lik_w_oa[,utteranceInValidIndices] <- NA
+  P_w_oa <- t(apply(Lik_w_oa, 1, function(a){return(a/sum(a, na.rm = TRUE))}))
   return(P_o_as %*% P_w_oa)
 }
 
@@ -233,7 +242,7 @@ result$number <- c(0, 1, 1, 2, 1, 2, 2, 3)
 result$speaker <- "knowledgeable"
 colnames(result) <- c("probability", "number", "speaker")
 
-accessTF <- c(FALSE, FALSE, FALSE)
+accessTF <- c(FALSE, FALSE, TRUE)
 result2 <- as.data.frame(round(listener(1, accessTF),2))
 result2$number <- c(0, 1, 1, 2, 1, 2, 2, 3)
 result2$speaker <- "ignorant"
@@ -262,8 +271,8 @@ ggplot(output2, aes(x = speaker, y = probability, fill = as.factor(number))) +
   labs(title = "Average probability of different states") +
   annotate(geom="text", x=1.5, y=.25, label="I bet that some of the clouds will turn black",
            color="red") +
-  scale_fill_manual(values=c("snow3", "snow2","slategray3","slategray4"), name = "Number of clouds")  +
+  scale_fill_brewer(palette="Blues", name = "Number of clouds") +
   xlab("The type of speaker that the listener assumes") +
-  ylab("Probability that listener picks a number") +
+  ylab("Probability of acceptance") +
   theme_bw() +
   ggsave("barplot_by_speaker.pdf", width = 5.5, height = 4, units = "in")
