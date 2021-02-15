@@ -1,5 +1,6 @@
 library(purrr)
 library(rlang)
+library(ggplot2)
 
 # number of objects that behave in a particular manner
 # I put the name "Constant" at the end, because this value should not be modified
@@ -189,20 +190,80 @@ listener <- function(utteranceIndex, accessTF) {
   return(statePosteriors / sum(statePosteriors))
 }
 
+# Quantifiers 1 "some",2 "all",3 "one", 4 "two",5 "notall",6 "none"
 
 # # TEST Listener function...: 
 # stateTF <- c(TRUE, TRUE, FALSE)
 #accessTF <- c(FALSE, FALSE, FALSE)
+
 accessTF <- c(TRUE, TRUE, TRUE)
-round(listener(6, accessTF),2)
+round(listener(1, accessTF),2)
 
+states <- c(0,1,2,3)
+probability <- c(0, 0.45, 0.45, 0.08)
 
+kn_speaker <- as.data.frame(cbind(states, probability))
+kn_speaker$speaker <- "knowledgeable"
 
+accessTF <- c(FALSE, FALSE, FALSE)
+round(listener(1, accessTF),2)
 
+probability <- c(0.12, 0.36, 0.36, 0.12)
+ign_speaker <- as.data.frame(cbind(states, probability))
+ign_speaker$speaker <- "ignorant"
 
+output <- rbind(kn_speaker, ign_speaker)
 
+ggplot(output, aes(x = states, y = probability, fill = speaker)) +
+  geom_bar(stat = "identity", color="grey45", width = 0.8, position=position_dodge()) +
+  ylim (0,0.7) +
+#  labs(title = "I bet that some of the clouds will turn black") +
+  annotate(geom="text", x=1.5, y=.6, label="I bet that some of the clouds will turn black",
+           color="red") +
+  scale_fill_brewer(palette="Accent") +
+  xlab("How many clouds turn black") +
+  ylab("Probability that listener picks a number") +
+  theme_bw()
 
+#### Plot average probability. Quantifier 'some' #####
 
+accessTF <- c(TRUE, TRUE, TRUE)
+result <- as.data.frame(round(listener(1, accessTF),2))
+result$number <- c(0, 1, 1, 2, 1, 2, 2, 3)
+result$speaker <- "knowledgeable"
+colnames(result) <- c("probability", "number", "speaker")
 
+accessTF <- c(FALSE, FALSE, FALSE)
+result2 <- as.data.frame(round(listener(1, accessTF),2))
+result2$number <- c(0, 1, 1, 2, 1, 2, 2, 3)
+result2$speaker <- "ignorant"
+colnames(result2) <- c("probability", "number", "speaker")
 
+output2 <- rbind(result, result2)
 
+ggplot(output2, aes(x = number, y = probability, fill = speaker)) +
+  geom_bar(stat = "identity", color="grey45", width = 0.8, position=position_dodge()) +
+  ylim (0,0.4) +
+  #  labs(title = "I bet that some of the clouds will turn black") +
+  annotate(geom="text", x=1.5, y=.3, label="I bet that some of the clouds will turn black",
+           color="red") +
+  scale_fill_brewer(palette="Accent") +
+  xlab("How many clouds turn black") +
+  ylab("Probability that listener picks a number") +
+  theme_bw()
+
+#### Plot average probability, restructure x axis Quantifier 'some' #####
+
+ggplot(output2, aes(x = speaker, y = probability, fill = as.factor(number))) +
+  geom_bar(stat = "identity", color = "grey", size=0.05,width = 0.8, position=position_dodge()) +
+  ylim (0,0.3) +
+  scale_x_discrete(limits = c("ignorant", "knowledgeable"),
+                   labels = c("Ignorant (adults)", "Knowledgeable (children)")) +
+  labs(title = "Average probability of different states") +
+  annotate(geom="text", x=1.5, y=.25, label="I bet that some of the clouds will turn black",
+           color="red") +
+  scale_fill_manual(values=c("snow3", "snow2","slategray3","slategray4"), name = "Number of clouds")  +
+  xlab("The type of speaker that the listener assumes") +
+  ylab("Probability that listener picks a number") +
+  theme_bw() +
+  ggsave("barplot_by_speaker.pdf", width = 5.5, height = 4, units = "in")
