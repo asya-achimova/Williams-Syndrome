@@ -18,54 +18,54 @@ function make_slides(f) {
   some =
    _.shuffle(
      [
-       {type: "test", item: "some_1_balloon", quantifier: "some"},
-       {type: "test", item: "some_1_camera", quantifier: "some"},
-       {type: "test", item: "some_1_circle", quantifier: "some"},
-       {type: "test", item: "some_1_flower", quantifier: "some"},
-       {type: "test", item: "some_1_house", quantifier: "some"},
-       {type: "test", item: "some_1_lock", quantifier: "some"},
-       {type: "test", item: "some_1_moon", quantifier: "some"},
-       {type: "test", item: "some_1_puzzle", quantifier: "some"},
-       {type: "test", item: "some_1_square", quantifier: "some"},
-       {type: "test", item: "some_1_star", quantifier: "some"},
-       {type: "test", item: "some_1_sun", quantifier: "some"},
-       {type: "test", item: "some_1_tree", quantifier: "some"},
+       {type: "test", item: "some_balloon", quantifier: "some"},
+       {type: "test", item: "some_camera", quantifier: "some"},
+       {type: "test", item: "some_circle", quantifier: "some"},
+       {type: "test", item: "some_flower", quantifier: "some"},
+       {type: "test", item: "some_house", quantifier: "some"},
+       {type: "test", item: "some_lock", quantifier: "some"},
+       {type: "test", item: "some_moon", quantifier: "some"},
+       {type: "test", item: "some_puzzle", quantifier: "some"},
+       {type: "test", item: "some_square", quantifier: "some"},
+       {type: "test", item: "some_star", quantifier: "some"},
+       {type: "test", item: "some_sun", quantifier: "some"},
+       {type: "test", item: "some_tree", quantifier: "some"},
      ]
     );
 
     all =
      _.shuffle(
       [
-        {type: "test", item: "all_1_boat", quantifier: "all"},
-        {type: "test", item: "all_1_camera", quantifier: "all"},
-        {type: "test", item: "all_1_circle", quantifier: "all"},
-        {type: "test", item: "all_1_cloud", quantifier: "all"},
-        {type: "test", item: "all_1_flag", quantifier: "all"},
-        {type: "test", item: "all_1_flower", quantifier: "all"},
-        {type: "test", item: "all_1_heart", quantifier: "all"},
-        {type: "test", item: "all_1_key", quantifier: "all"},
-        {type: "test", item: "all_1_lightbulb", quantifier: "all"},
-        {type: "test", item: "all_1_puzzle", quantifier: "all"},
-        {type: "test", item: "all_1_square", quantifier: "all"},
-        {type: "test", item: "all_1_tree", quantifier: "all"},
+        {type: "test", item: "all_boat", quantifier: "all"},
+        {type: "test", item: "all_camera", quantifier: "all"},
+        {type: "test", item: "all_circle", quantifier: "all"},
+        {type: "test", item: "all_cloud", quantifier: "all"},
+        {type: "test", item: "all_flag", quantifier: "all"},
+        {type: "test", item: "all_flower", quantifier: "all"},
+        {type: "test", item: "all_heart", quantifier: "all"},
+        {type: "test", item: "all_key", quantifier: "all"},
+        {type: "test", item: "all_lightbulb", quantifier: "all"},
+        {type: "test", item: "all_puzzle", quantifier: "all"},
+        {type: "test", item: "all_square", quantifier: "all"},
+        {type: "test", item: "all_tree", quantifier: "all"},
       ]
      );
 
     notall =
      _.shuffle(
       [
-        {type: "test", item: "notall_1_ball", quantifier: "notall"},
-        {type: "test", item: "notall_1_cake", quantifier: "notall"},
-        {type: "test", item: "notall_1_cup", quantifier: "notall"},
-        {type: "test", item: "notall_1_doughnut", quantifier: "notall"},
-        {type: "test", item: "notall_1_flower", quantifier: "notall"},
-        {type: "test", item: "notall_1_heart", quantifier: "notall"},
-        {type: "test", item: "notall_1_iceCream", quantifier: "notall"},
-        {type: "test", item: "notall_1_kite", quantifier: "notall"},
-        {type: "test", item: "notall_1_phone", quantifier: "notall"},
-        {type: "test", item: "notall_1_smile", quantifier: "notall"},
-        {type: "test", item: "notall_1_star", quantifier: "notall"},
-        {type: "test", item: "notall_1_triangle", quantifier: "notall"},
+        {type: "test", item: "notall_ball", quantifier: "notall"},
+        {type: "test", item: "notall_cake", quantifier: "notall"},
+        {type: "test", item: "notall_cup", quantifier: "notall"},
+        {type: "test", item: "notall_doughnut", quantifier: "notall"},
+        {type: "test", item: "notall_flower", quantifier: "notall"},
+        {type: "test", item: "notall_heart", quantifier: "notall"},
+        {type: "test", item: "notall_icecream", quantifier: "notall"},
+        {type: "test", item: "notall_kite", quantifier: "notall"},
+        {type: "test", item: "notall_phone", quantifier: "notall"},
+        {type: "test", item: "notall_smile", quantifier: "notall"},
+        {type: "test", item: "notall_star", quantifier: "notall"},
+        {type: "test", item: "notall_triangle", quantifier: "notall"},
       ]
      )
     ;
@@ -73,36 +73,36 @@ function make_slides(f) {
     or =
      _.shuffle(
       [
-        {type: "test", item: "or_1_arrowTree", quantifier: "or"},
-        {type: "test", item: "or_1_boat", quantifier: "or"},
-        {type: "test", item: "or_1_cupCake", quantifier: "or"},
-        {type: "test", item: "or_1_flowerpotHouse", quantifier: "or"},
-        {type: "test", item: "or_1_icecreamSun", quantifier: "or"},
-        {type: "test", item: "or_1_keyDoughnut", quantifier: "or"},
-        {type: "test", item: "or_1_lightbulb", quantifier: "or"},
-        {type: "test", item: "or_1_phoneCross", quantifier: "or"},
-        {type: "test", item: "or_1_ring", quantifier: "or"},
-        {type: "test", item: "or_1_smile", quantifier: "or"},
-        {type: "test", item: "or_1_smileHeart", quantifier: "or"},
-        {type: "test", item: "or_1_triangleSquare", quantifier: "or"},
+        {type: "test", item: "or_arrowTree", quantifier: "or"},
+        {type: "test", item: "or_boat", quantifier: "or"},
+        {type: "test", item: "or_cupCake", quantifier: "or"},
+        {type: "test", item: "or_flowerpotHouse", quantifier: "or"},
+        {type: "test", item: "or_icecreamSun", quantifier: "or"},
+        {type: "test", item: "or_keyDoughnut", quantifier: "or"},
+        {type: "test", item: "or_lightbulb", quantifier: "or"},
+        {type: "test", item: "or_phoneCross", quantifier: "or"},
+        {type: "test", item: "or_ring", quantifier: "or"},
+        {type: "test", item: "or_smile", quantifier: "or"},
+        {type: "test", item: "or_smileHeart", quantifier: "or"},
+        {type: "test", item: "or_triangleSquare", quantifier: "or"},
       ]
      );
 
     two = 
      _.shuffle(
       [
-        {type: "test", item: "two_1_arrow", quantifier: "two"},
-        {type: "test", item: "two_1_ball", quantifier: "two"},
-        {type: "test", item: "two_1_balloon", quantifier: "two"},
-        {type: "test", item: "two_1_cloud", quantifier: "two"},
-        {type: "test", item: "two_1_cross", quantifier: "two"},
-        {type: "test", item: "two_1_flag", quantifier: "two"},
-        {type: "test", item: "two_1_flowerpot", quantifier: "two"},
-        {type: "test", item: "two_1_lock", quantifier: "two"},
-        {type: "test", item: "two_1_ring", quantifier: "two"},
-        {type: "test", item: "two_1_smile", quantifier: "two"},
-        {type: "test", item: "two_1_tree", quantifier: "two"},
-        {type: "test", item: "two_1_triangle", quantifier: "two"},
+        {type: "test", item: "two_arrow", quantifier: "two"},
+        {type: "test", item: "two_ball", quantifier: "two"},
+        {type: "test", item: "two_balloon", quantifier: "two"},
+        {type: "test", item: "two_cloud", quantifier: "two"},
+        {type: "test", item: "two_cross", quantifier: "two"},
+        {type: "test", item: "two_flag", quantifier: "two"},
+        {type: "test", item: "two_flowerpot", quantifier: "two"},
+        {type: "test", item: "two_lock", quantifier: "two"},
+        {type: "test", item: "two_ring", quantifier: "two"},
+        {type: "test", item: "two_smile", quantifier: "two"},
+        {type: "test", item: "two_tree", quantifier: "two"},
+        {type: "test", item: "two_triangle", quantifier: "two"},
       ]
      );
 
