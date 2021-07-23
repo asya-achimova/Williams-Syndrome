@@ -336,7 +336,33 @@ colOrder <- c("subjectid", "duration",   "language",
 
 allBlocks_long <- allBlocks_long[,colOrder]
 
+### July 23, 2021 ###
 
+
+coding <- read.csv("WS coding 2021.csv")
+codingMin <- coding[,c("Item", "Scene","Outcome", "Correct_Response", "Relation", "Condition")]
+
+codingByBlock <- split(codingMin, as.factor(codingMin$Condition))
+codingByBlock <- rep(codingByBlock, each = NrOfParticipants)
+
+coding_long <- do.call("rbind", codingByBlock)
+
+tail(coding_long)
+
+allBlocks_long <- cbind(allBlocks_long, coding_long)
+
+
+colOrder <- c("subjectid", "duration",   "language",   
+              "Block 1",  "Block 2",   "Block 3",    "Block 4", "Block 5",    
+              "trial", "videoFile", "quantifier", "item", 
+              "Item", "Outcome", "Relation", "Condition" ,"answer",
+            "Correct_Response")
+
+
+allBlocks_long <- allBlocks_long[,colOrder]
+
+
+######## Old code with error ####
 
 #Code answers
 
@@ -421,7 +447,9 @@ allBlocks_long$score <- ifelse(allBlocks_long$answer == allBlocks_long$correctAn
 write.csv2(allBlocks_long, "allBlocks_long.csv", row.names = F)
 
 
-
+data_long <-read.csv("allBlocks_long.csv", sep = ";")
+or <- data_long %>%
+  filter(quantifier == "or" & subjectid == 1)
 
 ###PREPARE DATA FOR PLOTS
 # byRelation <- split(allBlocks_long, as.factor(allBlocks_long$Relation))
