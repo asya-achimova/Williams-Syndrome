@@ -42,37 +42,13 @@ plotData <- rbind(meanData, oldMeanData)
 plotData
 
 
-# Plot Data
-
-
-#Truthconditional
-truthconBar <- ggplot(plotData[plotData$Relation == "truthconditional",], aes(quantifier, mean, fill = batch)) +
-  geom_bar(stat = "identity", width = 0.5,  color = "black", position = position_dodge())+
-  theme_minimal() + 
-  ggtitle("Truthconditional old vs. new") + 
-#  geom_errorbar(aes(ymin = mean - sd, ymax = mean + sd), 
-#                width = .2,
-#                position = position_dodge(.5))
-
-truthconBar 
-
-#Entailment
-entailmentBar <- ggplot(plotData[plotData$Relation == "entailment",], aes(quantifier, mean, fill = batch)) +
-  geom_bar(stat = "identity", width = 0.5, color = "black", position = position_dodge())+
-  theme_minimal() + 
-  ggtitle("Entailment old vs. new") + 
-#  geom_errorbar(aes(ymin = mean - sd, ymax = mean + sd), 
-#                width = .2,
-#                position = position_dodge(.5))
-
-entailmentBar
-
 
 #Binomial confidence interval
 
+# NEW DATA
+
 binconData <- subset(newData, quantifier == "or" & Relation == "entailment")[,"score"] %>% table()
 
-binconf(binconData[2], binconData[1]+binconData[2])
 
 scorecount <- table(newData[,c("quantifier","score", "Relation") ])
 
@@ -102,6 +78,89 @@ scorecountTruthcon <- scorecountTruthcon %>% as.tibble() %>% group_by(quantifier
   mutate(binconf = binconf(Freq, Freq+NrOfZeroCases))
 
 scorecountTruthcon
+
+#Add together
+
+scorecountNew <- rbind(scorecountEntailment$binconf, scorecountTruthcon$binconf) %>% as.tibble()
+
+meanData <- cbind(meanData, scorecountNew[-c(1),])  %>% 
+  rename(binomial_conf_low = V2,
+         binomial_conf_up = V3) %>%
+  select(-V1)
+
+
+#OldData
+
+binconDataOld <- subset(oldData, quantifier == "or" & Relation == "entailment")[,"score"] %>% table()
+scorecountOld <- table(oldData[,c("quantifier","score", "Relation") ])
+scorecountOld <- as.data.frame(scorecountOld)
+
+
+#Entailment
+scorecountEntailmentOld <- subset(scorecountOld, Relation == "entailment" & score == 1)
+NrOfZeroCasesEntailmentOld <- subset(scorecountOld, Relation == "entailment" & score == 0)
+
+scorecountEntailmentOld$NrOfZeroCases <- NrOfZeroCasesEntailmentOld$Freq
+
+
+scorecountEntailmentOld <- scorecountEntailmentOld %>% as.tibble() %>% group_by(quantifier) %>%
+  mutate(binconf = binconf(Freq, Freq+NrOfZeroCases))
+
+
+#Truthcon
+scorecountTruthconOld <- subset(scorecountOld, Relation == "truthconditional" & score == 1)
+NrOfZeroCasesTruthconOld <- subset(scorecountOld, Relation == "truthconditional" & score == 0)
+
+scorecountTruthconOld$NrOfZeroCases <- NrOfZeroCasesTruthconOld$Freq
+
+
+scorecountTruthconOld <- scorecountTruthconOld %>% as.tibble() %>% group_by(quantifier) %>%
+  mutate(binconf = binconf(Freq, Freq+NrOfZeroCases))
+
+
+
+#Add together
+
+scorecountOld <- rbind(scorecountEntailmentOld$binconf, scorecountTruthconOld$binconf) %>% as.tibble()
+
+oldMeanData <- cbind(oldMeanData, scorecountOld[-c(1),])  %>% 
+  rename(binomial_conf_low = V2,
+         binomial_conf_up = V3) %>%
+  select(-V1)
+
+
+
+#Add to plotdata
+
+plotData <- rbind(meanData, oldMeanData)
+
+
+
+
+# Plot Data
+
+
+#Truthconditional
+truthconBar <- ggplot(plotData[plotData$Relation == "truthconditional",], aes(quantifier, mean, fill = batch)) +
+  geom_bar(stat = "identity", width = 0.5,  color = "black", position = position_dodge())+
+  theme_minimal() + 
+  ggtitle("Truthconditional old vs. new") + 
+ geom_errorbar(aes(ymin = binomial_conf_low, ymax = binomial_conf_up),
+               width = .2,
+               position = position_dodge(.5))
+
+truthconBar 
+
+#Entailment
+entailmentBar <- ggplot(plotData[plotData$Relation == "entailment",], aes(quantifier, mean, fill = batch)) +
+  geom_bar(stat = "identity", width = 0.5, color = "black", position = position_dodge())+
+  theme_minimal() + 
+  ggtitle("Entailment old vs. new") + 
+ geom_errorbar(aes(ymin =binomial_conf_low, ymax = binomial_conf_up),
+               width = .2,
+               position = position_dodge(.5))
+
+entailmentBar
 
 
 
