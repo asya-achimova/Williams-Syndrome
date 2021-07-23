@@ -1,0 +1,61 @@
+Trial,Condition,Scene,Item,Outcome,Correct_Response,Correct,Relation,Score
+24,All,Boat-All,1,3--3,yes,correct,truthconditional,1
+19,All,Camera-All,2,0--3,no,correct,truthconditional,1
+18,All,Circle-All,3,2--3,no,correct,truthconditional,1
+20,All,Cloud-All,4,2--3,no,correct,truthconditional,1
+15,All,Flag-All,5,0--3,no,correct,truthconditional,1
+14,All,Flower-All,6,3--3,yes,correct,truthconditional,1
+21,All,Heart-All,7,2--3,no,correct,truthconditional,1
+23,All,Key-All,8,3--3,yes,correct,truthconditional,1
+22,All,Lightbulb-Or,9,0--3,no,correct,truthconditional,1
+16,All,Puzzle-All,10,0--3,no,correct,truthconditional,1
+13,All,Square-All,11,2--3,no,correct,truthconditional,1
+17,All,Tree-All,12,3--3,yes,correct,truthconditional,1
+9,Not All,Ball-Not All,1,0--3,yes,semantic,entailment,1
+2,Not All,Cake-Not All,2,2--3,yes,correct,truthconditional,1
+1,Not All,Cup-Not All,3,3--3,no,correct,truthconditional,1
+12,Not All,Doughnut-Not All,4,2--3,yes,correct,truthconditional,1
+8,Not All,Flower-Not All,5,2--3,yes,correct,truthconditional,1
+7,Not All,Heart-Not All,6,0--3,yes,semantic,entailment,1
+10,Not All,Icecream-Not All,7,3--3,no,correct,truthconditional,1
+5,Not All,Kite-Not All,8,3--3,no,correct,truthconditional,1
+11,Not All,Phone-Not All,9,0--3,yes,semantic,entailment,1
+6,Not All,Smile-Not All,10,3--3,no,correct,truthconditional,1
+3,Not All,Star-Not All,11,0--3,yes,semantic,entailment,1
+4,Not All,Triangle-Not All,12,2--3,yes,correct,truthconditional,1
+40,Or,Arrow-tree-Or,1,Both,yes,semantic,entailment,1
+38,Or,Boat-Or,2,Either,yes,correct,truthconditional,1
+43,Or,Cup-cake-Or,3,Neither,no,correct,truthconditional,1
+45,Or,Flowerpot-house-Or,4,Both,yes,semantic,entailment,1
+46,Or,Icecream-Sun-Or,5,Neither,yes,correct,truthconditional,1
+42,Or,Key-Doughnut-Or,6,Neither,no,correct,truthconditional,1
+44,Or,Lightbulb-Or,7,Either,yes,correct,truthconditional,1
+41,Or,Phone-Cross-Or,8,Both,yes,semantic,entailment,1
+37,Or,Ring-Or,9,Either,yes,correct,truthconditional,1
+48,Or,Smile-Or,10,Either,yes,correct,truthconditional,1
+47,Or,Smile-Heart—Or,11,Both,yes,semantic,entailment,1
+39,Or,Triangle-circle-Or,12,Neither,no,correct,truthconditional,1
+27,Some,Balloon-Some,1,0--3,no,correct,truthconditional,1
+26,Some,Camera-Some,2,3--3,yes,semantic,entailment,1
+28,Some,Circle-Some,3,2--3,yes,correct,truthconditional,1
+36,Some,Flower-Some,4,0--3,no,correct,truthconditional,1
+31,Some,House-Some,5,0--3,no,correct,truthconditional,1
+32,Some,Lock-Some,6,2--3,yes,correct,truthconditional,1
+34,Some,Moon-Some,7,3--3,yes,semantic,entailment,1
+25,Some,Puzzle-Some,8,2--3,yes,correct,truthconditional,1
+30,Some,Square-Some,9,0--3,no,correct,truthconditional,1
+29,Some,Star-Some,10,3--3,yes,semantic,entailment,1
+33,Some,Sun-Some,11,3--3,yes,semantic,entailment,1
+35,Some,Tree-Some,12,2--3,yes,correct,truthconditional,1
+55,Two,Arrow-Two,1,0--3,no,correct,truthconditional,1
+60,Two,Ball-Two,2,2--3,yes,correct,truthconditional,1
+54,Two,Balloon-Two,3,2--3,yes,correct,truthconditional,1
+50,Two,Cloud-Two,4,3--3,no,pragmatic,entailment,0
+52,Two,Cross-Two,5,2--3,yes,correct,truthconditional,1
+58,Two,Flag-Two,6,3--3,yes,semantic,entailment,1
+49,Two,Flowerpot-Two,7,3--3,yes,semantic,entailment,1
+57,Two,Lock-Two,8,3--3,yes,semantic,entailment,1
+56,Two,Ring-Two,9,0--3,no,correct,truthconditional,1
+51,Two,Smile-Two,10,0--3,no,correct,truthconditional,1
+53,Two,Tree-Two,11,2--3,yes,correct,truthconditional,1
+59,Two,Triangle-Two,12,0--3,no,correct,truthconditional,1
