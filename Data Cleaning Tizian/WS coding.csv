@@ -1,0 +1,61 @@
+Subject,Group,Number,Condition,Item,Outcome,Response,Correct,Relation,Score
+309,Adult,24,All,Boat-All,3--3,yes,correct,truthconditional,1
+309,Adult,19,All,Camera-All,0--3,no,correct,truthconditional,1
+309,Adult,18,All,Circle-All,2--3,no,correct,truthconditional,1
+309,Adult,20,All,Cloud-All,2--3,no,correct,truthconditional,1
+309,Adult,15,All,Flag-All,0--3,no,correct,truthconditional,1
+309,Adult,14,All,Flower-All,3--3,yes,correct,truthconditional,1
+309,Adult,21,All,Heart-All,2--3,no,correct,truthconditional,1
+309,Adult,23,All,Key-All,3--3,yes,correct,truthconditional,1
+309,Adult,22,All,Lightbulb-Or,0--3,no,correct,truthconditional,1
+309,Adult,16,All,Puzzle-All,0--3,no,correct,truthconditional,1
+309,Adult,13,All,Square-All,2--3,no,correct,truthconditional,1
+309,Adult,17,All,Tree-All,3--3,yes,correct,truthconditional,1
+309,Adult,9,Not All,Ball-Not All,0--3,yes,semantic,entailment,1
+309,Adult,2,Not All,Cake-Not All,2--3,no,wrong,truthconditional,0
+309,Adult,1,Not All,Cup-Not All,3--3,yes,wrong,truthconditional,0
+309,Adult,12,Not All,Doughnut-Not All,2--3,yes,correct,truthconditional,1
+309,Adult,8,Not All,Flower-Not All,2--3,yes,correct,truthconditional,1
+309,Adult,7,Not All,Heart-Not All,0--3,yes,semantic,entailment,1
+309,Adult,10,Not All,Icecream-Not All,3--3,no,correct,truthconditional,1
+309,Adult,5,Not All,Kite-Not All,3--3,no,correct,truthconditional,1
+309,Adult,11,Not All,Phone-Not All,0--3,yes,semantic,entailment,1
+309,Adult,6,Not All,Smile-Not All,3--3,no,correct,truthconditional,1
+309,Adult,3,Not All,Star-Not All,0--3,yes,semantic,entailment,1
+309,Adult,4,Not All,Triangle-Not All,2--3,yes,correct,truthconditional,1
+309,Adult,40,Or,Arrow-tree-Or,Both,yes,semantic,entailment,1
+309,Adult,38,Or,Boat-Or,Either,yes,correct,truthconditional,1
+309,Adult,43,Or,Cup-cake-Or,Neither,yes,wrong,truthconditional,0
+309,Adult,45,Or,Flowerpot-house-Or,Neither,no,correct,truthconditional,1
+309,Adult,46,Or,Key-doughnut-Or,Both,yes,semantic,entailment,1
+309,Adult,42,Or,Lightbulb-Or,Either,yes,correct,truthconditional,1
+309,Adult,44,Or,Phone-cross-Or,Both,yes,semantic,entailment,1
+309,Adult,41,Or,Ring-Or,Either,yes,correct,truthconditional,1
+309,Adult,37,Or,Smile-heart-Or,Both,no,pragmatic,entailment,0
+309,Adult,48,Or,Smile-heart-Or,Either,yes,correct,truthconditional,1
+309,Adult,47,Or,Smile-Or,Neither,no,correct,truthconditional,1
+309,Adult,39,Or,Triangle-circle-Or,Neither,no,correct,truthconditional,1
+309,Adult,27,Some,Balloon-Some,0--3,no,correct,truthconditional,1
+309,Adult,26,Some,Camera-Some,3--3,yes,semantic,entailment,1
+309,Adult,28,Some,Circle-Some,2--3,yes,correct,truthconditional,1
+309,Adult,36,Some,Flower-Some,0--3,no,correct,truthconditional,1
+309,Adult,31,Some,House-Some,0--3,no,correct,truthconditional,1
+309,Adult,32,Some,Lock-Some,2--3,yes,correct,truthconditional,1
+309,Adult,34,Some,Moon-Some,3--3,yes,semantic,entailment,1
+309,Adult,25,Some,Puzzle-Some,2--3,yes,correct,truthconditional,1
+309,Adult,30,Some,Square-Some,0--3,no,correct,truthconditional,1
+309,Adult,29,Some,Star-Some,3--3,yes,semantic,entailment,1
+309,Adult,33,Some,Sun-Some,3--3,yes,semantic,entailment,1
+309,Adult,35,Some,Tree-Some,2--3,yes,correct,truthconditional,1
+309,Adult,55,Two,Arrow-Two,0--3,no,correct,truthconditional,1
+309,Adult,60,Two,Ball-Two,2--3,yes,correct,truthconditional,1
+309,Adult,54,Two,Balloon-Two,2--3,yes,correct,truthconditional,1
+309,Adult,50,Two,Cloud-Two,3--3,no,pragmatic,entailment,0
+309,Adult,52,Two,Cross-Two,2--3,yes,correct,truthconditional,1
+309,Adult,58,Two,Flag-Two,3--3,no,pragmatic,entailment,0
+309,Adult,49,Two,Flowerpot-Two,3--3,no,pragmatic,entailment,0
+309,Adult,57,Two,Lock-Two,3--3,no,pragmatic,entailment,0
+309,Adult,56,Two,Ring-Two,0--3,no,correct,truthconditional,1
+309,Adult,51,Two,Smile-Two,0--3,no,correct,truthconditional,1
+309,Adult,53,Two,Tree-Two,2--3,yes,correct,truthconditional,1
+309,Adult,59,Two,Triangle-Two,0--3,no,correct,truthconditional,1
