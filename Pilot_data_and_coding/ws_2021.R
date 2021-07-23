@@ -361,95 +361,108 @@ colOrder <- c("subjectid", "duration",   "language",
 
 allBlocks_long <- allBlocks_long[,colOrder]
 
+# Adding score
+
+allBlocks_long$Correct_Response <- allBlocks_long$Correct_Response %>%   
+  str_replace_all("yes", "Yes") %>%
+  str_replace_all("no", "No")
+
+allBlocks_long$score <- ifelse(allBlocks_long$answer == allBlocks_long$Correct_Response, 1, 0)
+
+
+write.csv2(allBlocks_long, "allBlocks_long.csv", row.names = FALSE)
+
+
+
 
 ######## Old code with error ####
 
 #Code answers
 
-coding <- read.csv("WS coding.csv")
-
-codingMin <- coding[,c("Item", "Outcome", "Relation", "Condition")]
-
-codingMin <- codingMin[c(1:26,27,28,34,29,30,31,32,35,33,36,37:nrow(codingMin)),]      #Change order of OR items
-
-codingByBlock <- split(codingMin, as.factor(codingMin$Condition))
-codingByBlock <- rep(codingByBlock, each = NrOfParticipants)
-
-coding_long <- do.call("rbind", codingByBlock)
-
-tail(coding_long)
-
-allBlocks_long <- cbind(allBlocks_long, coding_long)
-
-
-allBlocks_long[12,]
+# coding <- read.csv("WS coding.csv")
+# 
+# codingMin <- coding[,c("Item", "Outcome", "Relation", "Condition")]
+# 
+# codingMin <- codingMin[c(1:26,27,28,34,29,30,31,32,35,33,36,37:nrow(codingMin)),]      #Change order of OR items
+# 
+# codingByBlock <- split(codingMin, as.factor(codingMin$Condition))
+# codingByBlock <- rep(codingByBlock, each = NrOfParticipants)
+# 
+# coding_long <- do.call("rbind", codingByBlock)
+# 
+# tail(coding_long)
+# 
+# allBlocks_long <- cbind(allBlocks_long, coding_long)
+# 
+# 
+# allBlocks_long[12,]
 
 
 # Rearrange Order
-
-colOrder <- c("subjectid", "duration",   "language",   
-              "Block 1",  "Block 2",   "Block 3",    "Block 4", "Block 5",    
-              "trial", "videoFile", "quantifier", "item", 
-              "Item", "Outcome", "Relation", "Condition" ,"answer")
-
-
-allBlocks_long <- allBlocks_long[,colOrder]
+# 
+# colOrder <- c("subjectid", "duration",   "language",   
+#               "Block 1",  "Block 2",   "Block 3",    "Block 4", "Block 5",    
+#               "trial", "videoFile", "quantifier", "item", 
+#               "Item", "Outcome", "Relation", "Condition" ,"answer")
+# 
+# 
+# allBlocks_long <- allBlocks_long[,colOrder]
 
 
 
 #Adding score
-scores <- coding[,c("Item", "Response", "Correct", "Relation", "Score")]
-
-scores$correctResponse <- paste(scores$Response, scores$Correct, sep=": ")
-
-scores[scores$Correct == "wrong" | scores$Correct == "pragmatic" ,]
-scores[scores$Score == 0,]
-
-wrongRows <- rownames(scores[scores$Score == 0,]) %>% as.integer
-
-
-
-
-correctAnswers <- scores$correctResponse
-
-correctAnswers[wrongRows[1]] <- "yes: correct"
-correctAnswers[wrongRows[2]] <- "no: correct"
-correctAnswers[wrongRows[3]] <- "no: correct"
-correctAnswers[wrongRows[4]] <- "yes: semantic"
-correctAnswers[wrongRows[5]] <- "yes: semantic"
-correctAnswers[wrongRows[6]] <- "yes: semantic"
-correctAnswers[wrongRows[7]] <- "yes: semantic"
-correctAnswers[wrongRows[8]] <- "yes: semantic"
-
-correctAnswers <- correctAnswers %>% str_replace_all(": correct", "") %>% 
-  str_replace_all(": semantic", "") %>%
-  str_replace_all("yes", "Yes") %>%
-  str_replace_all("no", "No")
-
-coding$correctAnswers <- correctAnswers
-
-coding[c("Condition", "correctAnswers")]
-
-correctAnswersByBlock <- split(coding[c("Condition", "correctAnswers")],
-                               as.factor(coding$Condition))
-
-correctAnswersByBlock <- rep(correctAnswersByBlock, 
-                             each = NrOfParticipants)
-
-correctAnswersByBlockLong <- do.call("rbind", correctAnswersByBlock)
-
-correctAnswersByBlockLong <- correctAnswersByBlockLong$correctAnswers
-
-allBlocks_long$correctAnswers <- correctAnswersByBlockLong
-
-allBlocks_long$score <- ifelse(allBlocks_long$answer == allBlocks_long$correctAnswers, 1, 0)
+# scores <- coding[,c("Item", "Response", "Correct", "Relation", "Score")]
+# 
+# scores$correctResponse <- paste(scores$Response, scores$Correct, sep=": ")
+# 
+# scores[scores$Correct == "wrong" | scores$Correct == "pragmatic" ,]
+# scores[scores$Score == 0,]
+# 
+# wrongRows <- rownames(scores[scores$Score == 0,]) %>% as.integer
+# 
+# 
+# 
+# 
+# correctAnswers <- scores$correctResponse
+# 
+# correctAnswers[wrongRows[1]] <- "yes: correct"
+# correctAnswers[wrongRows[2]] <- "no: correct"
+# correctAnswers[wrongRows[3]] <- "no: correct"
+# correctAnswers[wrongRows[4]] <- "yes: semantic"
+# correctAnswers[wrongRows[5]] <- "yes: semantic"
+# correctAnswers[wrongRows[6]] <- "yes: semantic"
+# correctAnswers[wrongRows[7]] <- "yes: semantic"
+# correctAnswers[wrongRows[8]] <- "yes: semantic"
+# 
+# correctAnswers <- correctAnswers %>% str_replace_all(": correct", "") %>% 
+#   str_replace_all(": semantic", "") %>%
+#   str_replace_all("yes", "Yes") %>%
+#   str_replace_all("no", "No")
+# 
+# coding$correctAnswers <- correctAnswers
+# 
+# coding[c("Condition", "correctAnswers")]
+# 
+# correctAnswersByBlock <- split(coding[c("Condition", "correctAnswers")],
+#                                as.factor(coding$Condition))
+# 
+# correctAnswersByBlock <- rep(correctAnswersByBlock, 
+#                              each = NrOfParticipants)
+# 
+# correctAnswersByBlockLong <- do.call("rbind", correctAnswersByBlock)
+# 
+# correctAnswersByBlockLong <- correctAnswersByBlockLong$correctAnswers
+# 
+# allBlocks_long$correctAnswers <- correctAnswersByBlockLong
+# 
+# allBlocks_long$score <- ifelse(allBlocks_long$answer == allBlocks_long$correctAnswers, 1, 0)
   
-write.csv2(allBlocks_long, "allBlocks_long.csv", row.names = F)
+#write.csv2(allBlocks_long, "allBlocks_long.csv", row.names = F)
 
 
-data_long <-read.csv("allBlocks_long.csv", sep = ";")
-or <- data_long %>%
-  filter(quantifier == "or" & subjectid == 1)
+# data_long <-read.csv("allBlocks_long.csv", sep = ";")
+# or <- data_long %>%
+#   filter(quantifier == "or" & subjectid == 1)
 
 ###PREPARE DATA FOR PLOTS
 # byRelation <- split(allBlocks_long, as.factor(allBlocks_long$Relation))
